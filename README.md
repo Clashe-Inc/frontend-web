@@ -5,6 +5,8 @@
 yarn install
 ```
 
+Copy the file .env.template to .env in the root project
+
 ### Compiles and hot-reloads for development
 ```
 yarn serve
