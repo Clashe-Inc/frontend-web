@@ -31,7 +31,7 @@
       span.mr-2 Latest Release
       v-icon mdi-open-in-new
   v-main
-    h1 HOME
+    .text-h3 HOME
 </template>
 
 <script lang="ts">
