@@ -1,19 +1,32 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import AuthService from '../services/auth';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'home',
-    component: () => HomeView,
+    name: 'Home',
+    component: () => import('../views/HomeView.vue'),
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/LoginView.vue'),
   },
 ];
 
 const router = new VueRouter({
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (!AuthService.isLoggedIn() && to.name !== 'Login') {
+    next({ name: 'Login' });
+  } else {
+    next();
+  }
 });
 
 export default router;
