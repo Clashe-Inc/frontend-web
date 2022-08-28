@@ -1,44 +1,49 @@
 <template lang="pug">
-.home
+.d-flex
+  v-navigation-drawer(
+    v-model="drawer"
+    :mini-variant="drawer"
+    permanent
+    height="100vh"
+  )
+    Menu(id="home-view-menu" :items="items")
   v-app-bar(
       app
       color="primary"
       dark
     )
-    .d-flex.align-center
-      v-img(
-        alt="Vuetify Logo"
-        class="shrink mr-2"
-        contain
-        src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-        transition="scale-transition"
-        width="40"
-      )
-      v-img(
-        alt="Vuetify Name"
-        class="shrink mt-1 hidden-sm-and-down"
-        contain
-        min-width="100"
-        src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-        width="100"
-      )
+    v-app-bar-nav-icon(id="home-view-nav-icon" @click="onClick")
     v-spacer
-    v-btn(
-      href="https://github.com/vuetifyjs/vuetify/releases/latest"
-      target="_blank"
-      text
-    )
-      span.mr-2 Latest Release
-      v-icon mdi-open-in-new
+    UserMenu(id="home-view-user-menu")
   v-main
-    .text-h3 HOME
+    v-container(fluid)
+      router-view
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import Menu from '@/components/Menu.vue';
+import UserMenu from '@/components/UserMenu.vue';
 
 export default Vue.extend({
   name: 'HomeView',
-
+  components: { Menu, UserMenu },
+  data() {
+    return {
+      drawer: true,
+    };
+  },
+  computed: {
+    items() {
+      return this.$router
+        .getRoutes()
+        .filter((route) => Object.keys(route.meta).length);
+    },
+  },
+  methods: {
+    onClick() {
+      this.drawer = !this.drawer;
+    },
+  },
 });
 </script>

@@ -17,7 +17,7 @@ export default Vue.extend({
   name: 'LoginView',
   methods: {
     onClick() {
-      this.$router.push({ name: 'Home' });
+      this.$router.push({ name: 'Team' });
     },
   },
 });

@@ -6,9 +6,30 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
-    name: 'Home',
+    path: '',
     component: () => import('../views/HomeView.vue'),
+    children: [
+      {
+        path: '/',
+        name: 'Team',
+        component: () => import('../views/TeamView.vue'),
+        meta: {
+          icon: 'mdi-account-multiple-plus',
+          name: 'Team',
+          order: 1,
+        },
+      },
+      {
+        path: '/comps',
+        name: 'Comps',
+        component: () => import('../views/CompsView.vue'),
+        meta: {
+          icon: 'mdi-controller',
+          name: 'Comps',
+          order: 2,
+        },
+      },
+    ],
   },
   {
     path: '/login',

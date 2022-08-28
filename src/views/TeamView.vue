@@ -1,13 +1,11 @@
 <template lang="pug">
-v-app
-  v-expand-x-transition
-    router-view
+.text-h3 TeamView
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'App',
+
 });
 </script>
