@@ -9,7 +9,7 @@ describe('Menu.vue', () => {
     push: jest.fn(),
   };
 
-  it('renders props.msg when passed', () => {
+  it('when the menu component has a list of items with 1 item then it should be render', () => {
     const items = [{
       name: 'Route 1',
       meta: {
@@ -26,10 +26,12 @@ describe('Menu.vue', () => {
         items,
       },
     });
+
     const menuItems = wrapper.find('#menu-1');
+
     expect(menuItems.exists()).toBe(true);
   });
-  it('the method onClick should be called', () => {
+  it('when the second menu item is clicked then the router should redirect to the Route 2', () => {
     const items = [
       {
         name: 'Route 1',
@@ -58,7 +60,12 @@ describe('Menu.vue', () => {
       },
     });
     const menuItem = wrapper.find('#menu-2');
+
     menuItem.vm.$emit('click');
+
     expect($router.push).toBeCalledTimes(1);
+    expect($router.push).toHaveBeenCalledWith({
+      name: 'Route 2',
+    });
   });
 });

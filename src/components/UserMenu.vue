@@ -2,6 +2,7 @@
 .d-flex.align-center
   .text-subtitle-1.mr-3 John
   v-menu(
+    id="user-menu-list"
     bottom
     transition="slide-y-transition"
     rounded
@@ -9,6 +10,7 @@
   )
     template(v-slot:activator="{ on }")
       v-btn(
+        id="user-menu-btn-avatar"
         icon
         x-large
         v-on="on"
@@ -21,7 +23,13 @@
     v-card
       v-list-item-content.justify-center
         v-list-item
-          v-btn(depressed rounded text @click="onClick") Sair
+          v-btn(
+            id="user-menu-btn-exit"
+            depressed
+            rounded
+            text
+            @click="onClick"
+          ) Sair
 </template>
 
 <script lang="ts">

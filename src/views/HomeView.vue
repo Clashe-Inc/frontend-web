@@ -6,15 +6,15 @@
     permanent
     height="100vh"
   )
-    Menu(:items="items")
+    Menu(id="home-view-menu" :items="items")
   v-app-bar(
       app
       color="primary"
       dark
     )
-    v-app-bar-nav-icon(@click="onClick")
+    v-app-bar-nav-icon(id="home-view-nav-icon" @click="onClick")
     v-spacer
-    UserMenu
+    UserMenu(id="home-view-user-menu")
   v-main
     v-container(fluid)
       router-view
