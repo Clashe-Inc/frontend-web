@@ -1,4 +1,4 @@
-import MenuComponent from '@Components/Menu.vue';
+import MenuComponent from '@/components/Menu.vue';
 import { shallowMount } from '@vue/test-utils';
 
 describe('Menu.vue', () => {

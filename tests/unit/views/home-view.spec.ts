@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import HomeView from '@Views/HomeView.vue';
+import HomeView from '@/views/HomeView.vue';
 import Vuetify from 'vuetify';
 
 describe('HomeView', () => {
