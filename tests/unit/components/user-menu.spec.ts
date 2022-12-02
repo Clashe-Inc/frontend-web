@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import UserMenuComponent from '@Components/UserMenu.vue';
+import UserMenuComponent from '@/components/UserMenu.vue';
 
 describe('UserMenuComponent', () => {
   const $router = {
