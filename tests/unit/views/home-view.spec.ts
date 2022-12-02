@@ -25,7 +25,7 @@ describe('HomeView', () => {
       mocks: {
         $router,
       },
-      stubs: ['router-view'],
+      stubs: ['RouterView'],
       vuetify,
     });
 
@@ -38,7 +38,7 @@ describe('HomeView', () => {
       mocks: {
         $router,
       },
-      stubs: ['router-view'],
+      stubs: ['RouterView'],
       vuetify,
     });
 

@@ -1,0 +1,8 @@
+{
+  "singleQuote": true,
+  "trailingComma": "all",
+  "jsxSingleQuote": true,
+  "parser": "vue",
+  "plugins": ["@vue/airbnb"],
+  "bracketSameLine": true
+}

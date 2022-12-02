@@ -1,7 +1,7 @@
 <template lang="pug">
-v-app
-  v-expand-x-transition
-    router-view
+VApp
+  VExpandXTransition
+    RouterView
 </template>
 
 <script lang="ts">

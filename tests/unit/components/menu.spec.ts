@@ -1,4 +1,4 @@
-import MenuComponent from '@/components/Menu.vue';
+import SideMenu from '@/components/SideMenu.vue';
 import { shallowMount } from '@vue/test-utils';
 
 describe('Menu.vue', () => {
@@ -18,7 +18,7 @@ describe('Menu.vue', () => {
         order: 1,
       },
     }];
-    const wrapper = shallowMount(MenuComponent, {
+    const wrapper = shallowMount(SideMenu, {
       mocks: {
         $route,
       },
@@ -50,7 +50,7 @@ describe('Menu.vue', () => {
         },
       },
     ];
-    const wrapper = shallowMount(MenuComponent, {
+    const wrapper = shallowMount(SideMenu, {
       mocks: {
         $route,
         $router,
