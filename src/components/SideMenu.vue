@@ -1,28 +1,28 @@
 <template lang="pug">
-v-list
-  v-list-item.mt-2
-  v-list-item-group(
+VList
+  VListItem.mt-2
+  VListItemGroup(
     :value="selectedItem"
     color="primary"
   )
-    v-list-item(
+    VListItem(
       v-for="(item, index) in items"
       :key="index"
       @click="onClick(item)"
       :id="'menu-' + item.meta.order"
     )
-      v-list-item-icon
-        v-icon {{ item.meta.icon }}
-      v-list-item-content
-        v-list-item-title {{ item.meta.name }}
+      VListItemIcon
+        VIcon {{ item.meta.icon }}
+      VListItemContent
+        VListItemTitle {{ item.meta.name }}
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import Vue from 'vue';
 import { RouteRecordPublic } from 'vue-router';
 
-export default defineComponent({
-  name: 'MenuComponent',
+export default Vue.extend({
+  name: 'SideMenu',
   props: {
     items: {
       required: true,

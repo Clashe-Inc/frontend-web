@@ -1,33 +1,33 @@
 <template lang="pug">
 .d-flex
-  v-navigation-drawer(
+  VNavigationDrawer(
     v-model="drawer"
     :mini-variant="drawer"
     permanent
     height="100vh"
   )
-    Menu(id="home-view-menu" :items="items")
-  v-app-bar(
+    SideMenu(id="home-view-menu" :items="items")
+  VAppBar(
       app
       color="primary"
       dark
     )
-    v-app-bar-nav-icon(id="home-view-nav-icon" @click="onClick")
-    v-spacer
+    VAppBarNavIcon(id="home-view-nav-icon" @click="onClick")
+    VSpacer
     UserMenu(id="home-view-user-menu")
-  v-main
-    v-container(fluid)
-      router-view
+  VMain
+    VContainer(fluid)
+      RouterView
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import Menu from '@/components/Menu.vue';
+import SideMenu from '@/components/SideMenu.vue';
 import UserMenu from '@/components/UserMenu.vue';
 
 export default Vue.extend({
   name: 'HomeView',
-  components: { Menu, UserMenu },
+  components: { SideMenu, UserMenu },
   data() {
     return {
       drawer: true,

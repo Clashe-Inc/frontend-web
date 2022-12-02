@@ -1,13 +1,13 @@
 <template lang="pug">
-v-container
-  v-col
+VContainer
+  VCol
     .text-h3.text-center LOGIN
-  v-col
-    v-form
-      input-email(v-model="user.email" label="Email")
-      v-text-field
-      v-text-field
-      v-btn(@click="onClick") Salvar
+  VCol
+    VForm
+      InputEmail(v-model="user.email" label="Email" required)
+      VTextField
+      VTextField
+      VBtn(@click="onClick") Salvar
 </template>
 
 <script lang="ts">

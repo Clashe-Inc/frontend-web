@@ -1,12 +1,12 @@
 import { shallowMount } from '@vue/test-utils';
-import UserMenuComponent from '@Components/UserMenu.vue';
+import UserMenu from '@Components/UserMenu.vue';
 
 describe('UserMenuComponent', () => {
   const $router = {
     push: jest.fn(),
   };
   it('when the exit button is clicked then the router should redirect to Login View', () => {
-    const wrapper = shallowMount(UserMenuComponent, {
+    const wrapper = shallowMount(UserMenu, {
       mocks: {
         $router,
       },
