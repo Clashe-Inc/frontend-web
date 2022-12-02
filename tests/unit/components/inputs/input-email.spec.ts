@@ -24,7 +24,10 @@ describe('InputEmail test', () => {
       },
     });
     const input = wrapper.getComponent({ name: 'VTextField' });
-    expect(input.props().rules).toBe(wrapper.vm.$data.emailRules);
+    expect(input.props().rules).toEqual([
+      wrapper.vm.$data.inputRules.emailValidation,
+      wrapper.vm.$data.inputRules.required,
+    ]);
   });
   it('when label is not put then the label should be Labe', () => {
     const value = '';
@@ -44,7 +47,7 @@ describe('InputEmail test', () => {
         required: true,
       },
     });
-    expect(wrapper.vm.$data.emailRules[0]('')).toBe('E-mail is required');
+    expect(wrapper.vm.$data.inputRules.required('')).toBe('This field is required');
   });
   it('when email is not required then the input should not the validate required', () => {
     const value = '';
@@ -54,7 +57,7 @@ describe('InputEmail test', () => {
         required: false,
       },
     });
-    expect(wrapper.vm.$data.emailRules[0]('')).toBe(true);
+    expect(wrapper.vm.$data.inputRules.emailValidation('')).toBe(true);
   });
   it('when email is invalid then the input should validate the email', () => {
     const value = '';
@@ -64,6 +67,6 @@ describe('InputEmail test', () => {
         required: false,
       },
     });
-    expect(wrapper.vm.$data.emailRules[1]('abc')).toBe('E-mail must be valid');
+    expect(wrapper.vm.$data.inputRules.emailValidation('abc')).toBe('E-mail must be valid');
   });
 });
