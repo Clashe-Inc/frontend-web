@@ -10,11 +10,13 @@
             VForm(ref="loginForm" lazy-validation)
               VRow
                 VCol(cols=12)
-                  InputEmail(v-model="user.username" label="Email" required)
+                  InputEmail(v-model="summonerLogin.username" label="Email" required)
                 VCol(cols=12)
-                  InputPassword(v-model="user.password" label="Password" required)
+                  InputPassword(v-model="summonerLogin.password" label="Senha" required)
                 VCol(cols=12)
-                  ButtonSuccess(@click="onClick" label="Login")
+                  ButtonSuccess(@click="onClickLogin" label="Login")
+                VCol(cols=12)
+                  VBtn(@click="onClickSummonerRegister" block color="info") Cadastre-se
 </template>
 
 <script lang="ts">
@@ -22,11 +24,10 @@ import Vue from 'vue';
 import InputEmail from '@/components/inputs/InputEmail.vue';
 import InputPassword from '@/components/inputs/InputPassword.vue';
 import ButtonSuccess from '@/components/buttons/ButtonSuccess.vue';
-import SummonerLogin from '@/domains/SummonerLogin';
-
-interface FormValidation extends Vue {
-  validate(): boolean
-}
+import FormValidation from '@/domains/FormValidation';
+import SummonerLoginService from '@/services/SummonerLoginService';
+import AuthService from '@/services/AuthService';
+import SummonerLoginRequest from '@/domains/SummonerLoginRequest';
 
 export default Vue.extend({
   name: 'LoginView',
@@ -35,20 +36,33 @@ export default Vue.extend({
     InputPassword,
     ButtonSuccess,
   },
-  data(): { user: SummonerLogin } {
+  data(): { summonerLogin: SummonerLoginRequest } {
     return {
-      user: {
+      summonerLogin: {
         username: '',
         password: '',
       },
     };
   },
+  computed: {
+    refLoginForm() {
+      return this.$refs.loginForm as FormValidation;
+    },
+  },
   methods: {
-    onClick() {
-      const form = this.$refs.loginForm as FormValidation;
-      if (form.validate()) {
-        this.$router.push({ name: 'Team' });
+    async onClickLogin() {
+      if (this.refLoginForm.validate()) {
+        try {
+          const summonerLoggedIn = await SummonerLoginService.authenticate(this.summonerLogin);
+          AuthService.handle(summonerLoggedIn);
+          this.$router.push({ name: 'Team' });
+        } catch (error) {
+          console.error({ error });
+        }
       }
+    },
+    onClickSummonerRegister() {
+      console.log('Cadastre-se');
     },
   },
 });

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import AuthService from '../services/auth';
+import AuthService from '@/services/AuthService';
 
 Vue.use(VueRouter);
 

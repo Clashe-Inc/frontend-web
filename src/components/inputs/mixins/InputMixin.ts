@@ -14,7 +14,7 @@ export default Vue.mixin({
   data() {
     return {
       inputRules: {
-        required: (value: string) => !this.$props.required || !!value || 'This field is required',
+        required: (value: string) => !this.$props.required || !!value || 'Este campo é requerido',
       },
     };
   },
