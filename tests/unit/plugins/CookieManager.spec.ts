@@ -1,4 +1,4 @@
-import CookieService from '@/services/CookieService';
+import CookieManager from '@/plugins/CookieManager';
 import cookie from 'cookie';
 
 jest.mock('cookie');
@@ -11,7 +11,7 @@ describe('CookieService', () => {
   });
   it('the cookie input should be put into cookies', () => {
     cookieMock.serialize.mockReturnValueOnce('test-cookie=test-value');
-    CookieService.setCookie({
+    CookieManager.setCookie({
       name: 'test-cookie',
       value: 'test-value',
     });
@@ -24,7 +24,7 @@ describe('CookieService', () => {
     cookieMock.parse.mockReturnValueOnce({
       'test-cookie': 'test value',
     });
-    const cookieValue = CookieService.getCookie('test-cookie');
+    const cookieValue = CookieManager.getCookie('test-cookie');
     expect(cookieValue).toBeTruthy();
     expect(cookieMock.parse).toBeCalledTimes(1);
     expect(cookieMock.parse).toBeCalledWith('test-cookie=test value');
@@ -32,7 +32,7 @@ describe('CookieService', () => {
 
   it('when the cookies not exists then the cookie should be empty', () => {
     cookieMock.parse.mockReturnValueOnce({});
-    const cookieValue = CookieService.getCookie('empty-cookie');
+    const cookieValue = CookieManager.getCookie('empty-cookie');
     expect(cookieValue).toBeFalsy();
   });
 });

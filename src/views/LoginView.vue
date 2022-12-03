@@ -25,9 +25,8 @@ import InputEmail from '@/components/inputs/InputEmail.vue';
 import InputPassword from '@/components/inputs/InputPassword.vue';
 import ButtonSuccess from '@/components/buttons/ButtonSuccess.vue';
 import FormValidation from '@/domains/FormValidation';
-import SummonerLoginService from '@/services/SummonerLoginService';
 import AuthService from '@/services/AuthService';
-import SummonerLoginRequest from '@/domains/SummonerLoginRequest';
+import AuthRequest from '@/domains/AuthRequest';
 
 export default Vue.extend({
   name: 'LoginView',
@@ -36,7 +35,7 @@ export default Vue.extend({
     InputPassword,
     ButtonSuccess,
   },
-  data(): { summonerLogin: SummonerLoginRequest } {
+  data(): { summonerLogin: AuthRequest } {
     return {
       summonerLogin: {
         username: '',
@@ -53,7 +52,7 @@ export default Vue.extend({
     async onClickLogin() {
       if (this.refLoginForm.validate()) {
         try {
-          const summonerLoggedIn = await SummonerLoginService.authenticate(this.summonerLogin);
+          const summonerLoggedIn = await AuthService.authenticate(this.summonerLogin);
           AuthService.handle(summonerLoggedIn);
           this.$router.push({ name: 'Team' });
         } catch (error) {
