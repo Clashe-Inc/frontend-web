@@ -12,7 +12,15 @@ const getCookie = (name: string) => {
   return decodedCookie[name] ?? '';
 };
 
+const removeCookie = (name: string) => {
+  const expires = new Date(1970, 0, 1, 1, 1, 1, 1);
+  document.cookie = cookie.serialize(name, '', {
+    expires,
+  });
+};
+
 export default {
   setCookie,
   getCookie,
+  removeCookie,
 };

@@ -25,8 +25,8 @@ import InputEmail from '@/components/inputs/InputEmail.vue';
 import InputPassword from '@/components/inputs/InputPassword.vue';
 import ButtonSuccess from '@/components/buttons/ButtonSuccess.vue';
 import FormValidation from '@/domains/FormValidation';
-import AuthService from '@/services/AuthService';
-import AuthRequest from '@/domains/AuthRequest';
+import SummonerAuthService from '@/services/SummonerAuthService';
+import SummonerAuthRequest from '@/domains/SummonerAuthRequest';
 
 export default Vue.extend({
   name: 'LoginView',
@@ -35,7 +35,7 @@ export default Vue.extend({
     InputPassword,
     ButtonSuccess,
   },
-  data(): { summonerLogin: AuthRequest } {
+  data(): { summonerLogin: SummonerAuthRequest } {
     return {
       summonerLogin: {
         username: '',
@@ -52,8 +52,7 @@ export default Vue.extend({
     async onClickLogin() {
       if (this.refLoginForm.validate()) {
         try {
-          const summonerLoggedIn = await AuthService.authenticate(this.summonerLogin);
-          AuthService.handle(summonerLoggedIn);
+          await SummonerAuthService.authenticate(this.summonerLogin);
           this.$router.push({ name: 'Team' });
         } catch (error) {
           console.error({ error });
@@ -63,6 +62,9 @@ export default Vue.extend({
     onClickSummonerRegister() {
       console.log('Cadastre-se');
     },
+  },
+  created() {
+    SummonerAuthService.removeAuth();
   },
 });
 </script>

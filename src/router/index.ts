@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import AuthService from '@/services/AuthService';
+import AuthService from '@/services/SummonerAuthService';
 
 Vue.use(VueRouter);
 
@@ -43,7 +43,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (!AuthService.isLoggedIn() && to.name !== 'Login') {
+  if (!AuthService.isAuthenticated() && to.name !== 'Login') {
     next({ name: 'Login' });
   } else {
     next();
