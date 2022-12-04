@@ -53,6 +53,7 @@ export default Vue.extend({
       if (this.refLoginForm.validate()) {
         try {
           await SummonerAuthService.authenticate(this.summonerLogin);
+          console.log({ r: this.$router });
           this.$router.push({ name: 'Team' });
         } catch (error) {
           console.error({ error });
