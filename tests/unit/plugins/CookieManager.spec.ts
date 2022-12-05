@@ -39,16 +39,17 @@ describe('CookieManager', () => {
   });
 
   it('the cookie should be removed', () => {
+    const expiresAt = new Date(Date.UTC(1970, 0, 1, 1, 1, 1, 1));
     document.cookie = 'test-cookie=test-value';
     cookieMock.serialize
-      .mockReturnValueOnce('test-cookie=; expires=Thu, 01 Jan 1970 04:01:01 UTC');
+      .mockReturnValueOnce(`test-cookie=; expires=${expiresAt.toUTCString()}`);
 
     CookieManager.removeCookie('test-cookie');
 
     expect(cookieMock.serialize).toBeCalledWith(
       'test-cookie',
       '',
-      { expires: new Date('1970-01-01T04:01:01.001Z') },
+      { expires: expiresAt },
     );
     expect(document.cookie).toBe('');
   });

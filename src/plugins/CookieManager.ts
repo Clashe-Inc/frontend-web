@@ -13,7 +13,7 @@ const getCookie = (name: string) => {
 };
 
 const removeCookie = (name: string) => {
-  const expires = new Date(1970, 0, 1, 1, 1, 1, 1);
+  const expires = new Date(Date.UTC(1970, 0, 1, 1, 1, 1, 1));
   document.cookie = cookie.serialize(name, '', {
     expires,
   });
