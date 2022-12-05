@@ -49,15 +49,18 @@ export default Vue.extend({
     },
   },
   methods: {
-    async onClickLogin() {
+    handleSuccess() {
+      this.$router.push({ name: 'Team' });
+    },
+    handleError(error: any) {
+      console.error({ error });
+    },
+    onClickLogin() {
       if (this.refLoginForm.validate()) {
-        try {
-          await SummonerAuthService.authenticate(this.summonerLogin);
-          console.log({ r: this.$router });
-          this.$router.push({ name: 'Team' });
-        } catch (error) {
-          console.error({ error });
-        }
+        SummonerAuthService
+          .authenticate(this.summonerLogin)
+          .then(this.handleSuccess)
+          .catch(this.handleError);
       }
     },
     onClickSummonerRegister() {

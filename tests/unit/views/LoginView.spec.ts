@@ -1,58 +1,53 @@
 import ButtonSuccessVue from '@/components/buttons/ButtonSuccess.vue';
+import SummonerAuthRequest from '@/domains/SummonerAuthRequest';
 import SummonerAuthService from '@/services/SummonerAuthService';
 import LoginView from '@/views/LoginView.vue';
-import { createLocalVue, mount, Wrapper } from '@vue/test-utils';
-import VueRouter from 'vue-router';
+import { mount, Wrapper } from '@vue/test-utils';
+import Vue from 'vue';
 import Vuetify from 'vuetify';
 
 jest.mock('@/services/SummonerAuthService');
-
 const summonerAuthServiceMock = jest.mocked(SummonerAuthService);
 
 describe('LoginView', () => {
+  const vuetify = new Vuetify();
   let wrapper: Wrapper<Vue>;
-  let $router: VueRouter;
-  let refLoginFormMock: { validate: CallableFunction };
-  let validateMock: jest.Mock;
+  const refLoginFormMock = { validate: jest.fn() };
+  const mocks = {
+    $router: {
+      push: jest.fn(),
+    },
+  };
 
   beforeEach(() => {
-    const vuetify = new Vuetify();
-    summonerAuthServiceMock.removeAuth = jest.fn();
-    summonerAuthServiceMock.authenticate = jest.fn();
-    validateMock = jest.fn();
-    $router = jest.mocked(new VueRouter());
-    $router.push = jest.fn();
-    refLoginFormMock = {
-      validate: validateMock,
-    };
+    summonerAuthServiceMock.removeAuth.mockClear();
+    summonerAuthServiceMock.authenticate.mockClear();
     wrapper = mount(LoginView, {
       vuetify,
       computed: {
         refLoginForm: () => refLoginFormMock,
       },
-      mocks: {
-        $router,
-      },
+      mocks,
     });
   });
   it('when login view is created then the summoner auth should remove the authentication', () => {
     expect(summonerAuthServiceMock.removeAuth).toBeCalledTimes(1);
   });
   it('when login click is emitted and the form is valid then the summoner should be authenticated', async () => {
-    validateMock.mockReturnValueOnce(true);
+    refLoginFormMock.validate.mockReturnValueOnce(true);
+    summonerAuthServiceMock.authenticate.mockResolvedValueOnce();
+
     await wrapper.setData({
       summonerLogin: {
         username: 'summoner1',
         password: 'summonerpass',
-      },
+      } as SummonerAuthRequest,
     });
-    summonerAuthServiceMock.authenticate.mockResolvedValueOnce();
     const buttonSuccess = wrapper.findComponent(ButtonSuccessVue);
-    buttonSuccess.trigger('click');
-
-    expect(refLoginFormMock.validate).toBeCalledTimes(1);
+    await buttonSuccess.trigger('click');
+    expect(refLoginFormMock.validate).toHaveBeenCalledTimes(1);
     expect(summonerAuthServiceMock.authenticate).toBeCalledTimes(1);
     expect(summonerAuthServiceMock.authenticate).toBeCalledWith({ password: 'summonerpass', username: 'summoner1' });
-    expect($router.push).toBeCalledWith(0);
+    expect(mocks.$router.push).toBeCalledTimes(1);
   });
 });
