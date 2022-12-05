@@ -5,7 +5,7 @@ jest.mock('cookie');
 
 const cookieMock = jest.mocked(cookie);
 
-describe('CookieService', () => {
+describe('CookieManager', () => {
   beforeEach(() => {
     document.cookie = 'test-cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
     cookieMock.parse.mockReset();
