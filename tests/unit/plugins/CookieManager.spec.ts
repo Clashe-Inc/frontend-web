@@ -8,8 +8,8 @@ const cookieMock = jest.mocked(cookie);
 describe('CookieManager', () => {
   beforeEach(() => {
     document.cookie = 'test-cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-    cookieMock.parse.mockReset();
-    cookieMock.serialize.mockReset();
+    cookieMock.parse.mockClear();
+    cookieMock.serialize.mockClear();
   });
   it('the cookie input should be put into cookies', () => {
     cookieMock.serialize.mockReturnValueOnce('test-cookie=test-value');
@@ -39,13 +39,10 @@ describe('CookieManager', () => {
   });
 
   it('the cookie should be removed', () => {
+    document.cookie = 'test-cookie=test-value';
     cookieMock.serialize
-      .mockReturnValueOnce('test-cookie=test-value')
       .mockReturnValueOnce('test-cookie=; expires=Thu, 01 Jan 1970 04:01:01 UTC');
-    CookieManager.setCookie({
-      name: 'test-cookie',
-      value: 'test-value',
-    });
+
     CookieManager.removeCookie('test-cookie');
 
     expect(cookieMock.serialize).toBeCalledWith(
