@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import HomeView from '@/views/HomeView.vue';
 import Vuetify from 'vuetify';
 
@@ -21,12 +21,15 @@ describe('HomeView', () => {
   const vuetify = new Vuetify();
 
   it('when the home view is rendered with 1 route with meta then the menu items should have 1 item', () => {
-    const wrapper = shallowMount(HomeView, {
+    const wrapper = mount(HomeView, {
+      vuetify,
       mocks: {
         $router,
       },
-      stubs: ['RouterView'],
-      vuetify,
+      stubs: {
+        RouterView: true,
+        SideMenu: true,
+      },
     });
 
     const menu = wrapper.find('#home-view-menu');
@@ -34,12 +37,15 @@ describe('HomeView', () => {
   });
 
   it('when the nav bar icon is clicked then the drawer should be changed it', () => {
-    const wrapper = shallowMount(HomeView, {
+    const wrapper = mount(HomeView, {
+      vuetify,
       mocks: {
         $router,
       },
-      stubs: ['RouterView'],
-      vuetify,
+      stubs: {
+        RouterView: true,
+        SideMenu: true,
+      },
     });
 
     const navBarIcon = wrapper.find('#home-view-nav-icon');

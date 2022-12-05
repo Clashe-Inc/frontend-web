@@ -49,12 +49,6 @@ export default Vue.extend({
     },
   },
   methods: {
-    handleSuccess() {
-      this.$router.push({ name: 'Team' });
-    },
-    handleError(error: any) {
-      console.error({ error });
-    },
     onClickLogin() {
       if (this.refLoginForm.validate()) {
         SummonerAuthService
@@ -62,6 +56,12 @@ export default Vue.extend({
           .then(this.handleSuccess)
           .catch(this.handleError);
       }
+    },
+    handleSuccess() {
+      this.$router.push({ name: 'Team' });
+    },
+    handleError(error: any) {
+      console.error({ error });
     },
     onClickSummonerRegister() {
       console.log('Cadastre-se');

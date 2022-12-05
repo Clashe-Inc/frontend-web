@@ -22,6 +22,7 @@ describe('LoginView', () => {
   beforeEach(() => {
     summonerAuthServiceMock.removeAuth.mockClear();
     summonerAuthServiceMock.authenticate.mockClear();
+    refLoginFormMock.validate.mockClear();
     wrapper = mount(LoginView, {
       vuetify,
       computed: {
@@ -44,10 +45,22 @@ describe('LoginView', () => {
       } as SummonerAuthRequest,
     });
     const buttonSuccess = wrapper.findComponent(ButtonSuccessVue);
+
     await buttonSuccess.trigger('click');
+
     expect(refLoginFormMock.validate).toHaveBeenCalledTimes(1);
     expect(summonerAuthServiceMock.authenticate).toBeCalledTimes(1);
     expect(summonerAuthServiceMock.authenticate).toBeCalledWith({ password: 'summonerpass', username: 'summoner1' });
     expect(mocks.$router.push).toBeCalledTimes(1);
+  });
+  it('when login click is emitted and the form is invalid then the summoner should be not authenticated', async () => {
+    const logMock = jest.spyOn(console, 'error').mockImplementation();
+    refLoginFormMock.validate.mockReturnValueOnce(true);
+    summonerAuthServiceMock.authenticate.mockRejectedValueOnce(new Error('Invalid credentials'));
+    const buttonSuccess = wrapper.findComponent(ButtonSuccessVue);
+
+    await buttonSuccess.trigger('click');
+
+    expect(logMock).toBeCalledTimes(1);
   });
 });
