@@ -33,7 +33,7 @@ export default Vue.extend({
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     return {
       inputRules: {
-        emailValidation: (value: string) => !value.length || regex.test(value) || 'E-mail must be valid',
+        emailValidation: (value: string) => !value.length || regex.test(value) || 'E-mail deve ser válido',
       },
     };
   },

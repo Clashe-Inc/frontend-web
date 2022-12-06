@@ -1,38 +1,80 @@
 <template lang="pug">
-VContainer
-  VCol
-    .text-h3.text-center LOGIN
-  VCol
-    VForm
-      InputEmail(v-model="user.username" label="Email")
-      InputPassword(v-model="user.password" label="Password")
-      VBtn(@click="onClick") Salvar
+.login-view
+  VImg(:src="require('@/assets/clash-1.jpg')" height="50vh")
+  VContainer.login-view_content
+    VRow(justify="center")
+      VCol(cols=4)
+        VCard(elevation=4 rounded)
+          .display-1.font-weight-light.text-center.pt-5 Bem vindo ao Clashe
+          VCardText
+            VForm(ref="loginForm" lazy-validation)
+              VRow
+                VCol(cols=12)
+                  InputEmail(v-model="summonerLogin.username" label="Email" required)
+                VCol(cols=12)
+                  InputPassword(v-model="summonerLogin.password" label="Senha" required)
+                VCol(cols=12)
+                  ButtonSuccess(@click="onClickLogin" label="Login")
+                VCol(cols=12)
+                  VBtn(@click="onClickSummonerRegister" block color="info") Cadastre-se
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import InputEmail from '@/components/inputs/InputEmail.vue';
 import InputPassword from '@/components/inputs/InputPassword.vue';
-import SummonerLogin from '@/domains/SummonerLogin';
+import ButtonSuccess from '@/components/buttons/ButtonSuccess.vue';
+import FormValidation from '@/domains/FormValidation';
+import SummonerAuthService from '@/services/SummonerAuthService';
+import SummonerAuthRequest from '@/domains/SummonerAuthRequest';
 
 export default Vue.extend({
   name: 'LoginView',
   components: {
     InputEmail,
     InputPassword,
+    ButtonSuccess,
   },
-  data(): { user: SummonerLogin } {
+  data(): { summonerLogin: SummonerAuthRequest } {
     return {
-      user: {
+      summonerLogin: {
         username: '',
         password: '',
       },
     };
   },
+  computed: {
+    refLoginForm() {
+      return this.$refs.loginForm as FormValidation;
+    },
+  },
   methods: {
-    onClick() {
+    onClickLogin() {
+      if (this.refLoginForm.validate()) {
+        SummonerAuthService
+          .authenticate(this.summonerLogin)
+          .then(this.handleSuccess)
+          .catch(this.handleError);
+      }
+    },
+    handleSuccess() {
       this.$router.push({ name: 'Team' });
     },
+    handleError(error: any) {
+      console.error({ error });
+    },
+    onClickSummonerRegister() {
+      console.log('Cadastre-se');
+    },
+  },
+  created() {
+    SummonerAuthService.removeAuth();
   },
 });
 </script>
+
+<style scoped>
+.login-view_content {
+  margin-top: -8%;
+}
+</style>

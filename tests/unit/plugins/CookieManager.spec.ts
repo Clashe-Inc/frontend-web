@@ -1,0 +1,56 @@
+import CookieManager from '@/plugins/CookieManager';
+import cookie from 'cookie';
+
+jest.mock('cookie');
+
+const cookieMock = jest.mocked(cookie);
+
+describe('CookieManager', () => {
+  beforeEach(() => {
+    document.cookie = 'test-cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+    cookieMock.parse.mockClear();
+    cookieMock.serialize.mockClear();
+  });
+  it('the cookie input should be put into cookies', () => {
+    cookieMock.serialize.mockReturnValueOnce('test-cookie=test-value');
+    CookieManager.setCookie({
+      name: 'test-cookie',
+      value: 'test-value',
+    });
+    expect(document.cookie).toEqual('test-cookie=test-value');
+    expect(cookieMock.serialize).toBeCalledTimes(1);
+    expect(cookieMock.serialize).toBeCalledWith('test-cookie', 'test-value', { secure: true });
+  });
+  it('when the cookies exists then the cookie should be retrieved', () => {
+    document.cookie = 'test-cookie=test value; 0; path=/';
+    cookieMock.parse.mockReturnValueOnce({
+      'test-cookie': 'test value',
+    });
+    const cookieValue = CookieManager.getCookie('test-cookie');
+    expect(cookieValue).toBeTruthy();
+    expect(cookieMock.parse).toBeCalledTimes(1);
+    expect(cookieMock.parse).toBeCalledWith('test-cookie=test value');
+  });
+
+  it('when the cookies not exists then the cookie should be empty', () => {
+    cookieMock.parse.mockReturnValueOnce({});
+    const cookieValue = CookieManager.getCookie('empty-cookie');
+    expect(cookieValue).toBeFalsy();
+  });
+
+  it('the cookie should be removed', () => {
+    const expiresAt = new Date(Date.UTC(1970, 0, 1, 1, 1, 1, 1));
+    document.cookie = 'test-cookie=test-value';
+    cookieMock.serialize
+      .mockReturnValueOnce(`test-cookie=; expires=${expiresAt.toUTCString()}`);
+
+    CookieManager.removeCookie('test-cookie');
+
+    expect(cookieMock.serialize).toBeCalledWith(
+      'test-cookie',
+      '',
+      { expires: expiresAt },
+    );
+    expect(document.cookie).toBe('');
+  });
+});

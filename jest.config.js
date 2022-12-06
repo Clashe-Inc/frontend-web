@@ -17,7 +17,6 @@ module.exports = {
   verbose: true,
   coveragePathIgnorePatterns: [
     '<rootDir>/src/main.ts',
-    '<rootDir>/src/plugins/*',
     '<rootDir>/src/registerServiceWorker.ts',
   ],
 };

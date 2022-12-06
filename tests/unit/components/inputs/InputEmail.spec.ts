@@ -36,12 +36,12 @@ describe('InputEmail test', () => {
   it('when email is required then the input should validate the required rule', async () => {
     await wrapper.setProps({ required: true });
 
-    expect(wrapper.vm.$data.inputRules.required('')).toBe('This field is required');
+    expect(wrapper.vm.$data.inputRules.required('')).toBe('Este campo é requerido');
   });
   it('when email is not required then the input should not the validate required', () => {
     expect(wrapper.vm.$data.inputRules.emailValidation('')).toBe(true);
   });
   it('when email is invalid then the input should validate the email', () => {
-    expect(wrapper.vm.$data.inputRules.emailValidation('abc')).toBe('E-mail must be valid');
+    expect(wrapper.vm.$data.inputRules.emailValidation('abc')).toBe('E-mail deve ser válido');
   });
 });
