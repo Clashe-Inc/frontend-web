@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useRoute, useRouter, type RouteRecordRaw } from 'vue-router';
+import { summonerStore } from '@/stores/SummonerStore';
 
 const route = useRoute();
 const router = useRouter();
@@ -41,8 +42,8 @@ const handleExitAppIcon = () => router.push({ name: 'Login' });
     height="100%"
   >
     <VListItem
-      prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-      title="John Leider"
+      :prepend-avatar="`http://ddragon.leagueoflegends.com/cdn/12.23.1/img/profileicon/${summonerStore.summoner.profile_icon_id}.png`"
+      :title="summonerStore.summoner.nickname"
       nav
       @click="handleExpandingDrawer"
     >

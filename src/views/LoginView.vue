@@ -10,6 +10,7 @@ import backgroundImg from '@/assets/clash-1.jpg';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { loadingStore } from '@/stores/LoadingStore';
+import { authStore } from '@/stores/AuthStore';
 
 const router = useRouter();
 
@@ -25,7 +26,8 @@ const handleSubmit = async () => {
   if (!valid) return;
   loadingStore.setLoading(true);
   try {
-    await SummonerAuthService.authenticate(summonerLogin.value);
+    const authResponse = await SummonerAuthService.authenticate(summonerLogin.value);
+    authStore.setAuthentication(authResponse);
     handleSuccess();
   } catch {
     handleError();
@@ -41,7 +43,7 @@ const handleClickRegister = () => router.push({ name: 'Summoner Register' });
 const handleError = () => snackbarStore.error('Usuário ou senha inválidos');
 
 onMounted(() => {
-  SummonerAuthService.removeAuth();
+  authStore.removeAuth();
 });
 </script>
 
