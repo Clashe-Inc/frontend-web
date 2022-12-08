@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import logoImg from '@/assets/clash-2.jpg';
-import ButtonSuccess from '@/components/buttons/ButtonSuccess.vue';
-import ButtonText from '@/components/buttons/ButtonText.vue';
+import ButtonSuccess from '@/components/buttons/SuccessButton.vue';
+import ButtonText from '@/components/buttons/TextButton.vue';
 import InputEmail from '@/components/inputs/InputEmail.vue';
 import InputNickname from '@/components/inputs/InputNickname.vue';
 import InputPassword from '@/components/inputs/InputPassword.vue';

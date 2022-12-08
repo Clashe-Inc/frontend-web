@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { loadingStore } from '@/stores/LoadingStore';
 
 const props = defineProps({
   label: {
@@ -53,5 +54,6 @@ const handleClickIcon = () => show.value != show.value;
     @click:append="handleClickIcon"
     @update:model-value="handleUpdateModel"
     @keydown.enter.prevent="handleSummit"
+    :disabled="loadingStore.loading"
   />
 </template>

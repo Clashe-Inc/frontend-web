@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { loadingStore } from '@/stores/LoadingStore';
+
 defineProps({
   label: {
     type: String,
@@ -12,7 +14,14 @@ defineProps({
 </script>
 
 <template>
-  <VBtn :id="id" color="success" block elevation="2">
+  <VBtn
+    :id="id"
+    color="success"
+    block
+    elevation="2"
+    :loading="loadingStore.loading"
+    :disabled="loadingStore.loading"
+  >
     {{ label }}
   </VBtn>
 </template>

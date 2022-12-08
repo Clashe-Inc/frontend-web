@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import InputEmail from '@/components/inputs/InputEmail.vue';
 import InputPassword from '@/components/inputs/InputPassword.vue';
-import ButtonSuccess from '@/components/buttons/ButtonSuccess.vue';
+import SuccessButton from '@/components/buttons/SuccessButton.vue';
+import RegisterButton from '@/components/buttons/RegisterButton.vue';
 import type SummonerAuthRequest from '@/domains/SummonerAuthRequest';
 import SummonerAuthService from '@/services/SummonerAuthService';
 import { snackbarStore } from '@/stores/SnackbarStore';
 import backgroundImg from '@/assets/clash-1.jpg';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { loadingStore } from '@/stores/LoadingStore';
 
 const router = useRouter();
 
@@ -21,7 +23,15 @@ const handleSubmit = async () => {
   if (!loginForm.value) return;
   const { valid } = await loginForm.value.validate();
   if (!valid) return;
-  SummonerAuthService.authenticate(summonerLogin.value).then(handleSuccess).catch(handleError);
+  loadingStore.setLoading(true);
+  try {
+    await SummonerAuthService.authenticate(summonerLogin.value);
+    handleSuccess();
+  } catch {
+    handleError();
+  } finally {
+    loadingStore.setLoading(false);
+  }
 };
 
 const handleSuccess = () => router.push({ name: 'Team' });
@@ -63,10 +73,10 @@ onMounted(() => {
                     />
                   </VCol>
                   <VCol cols="12">
-                    <ButtonSuccess @click="handleSubmit" label="Login"></ButtonSuccess>
+                    <SuccessButton @click="handleSubmit" label="Login"></SuccessButton>
                   </VCol>
                   <VCol cols="12">
-                    <VBtn @click="handleClickRegister" block color="info">Cadastre-se</VBtn>
+                    <RegisterButton @click="handleClickRegister" label="Cadastre-se" />
                   </VCol>
                 </VRow>
               </VForm>

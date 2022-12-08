@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { loadingStore } from '@/stores/LoadingStore';
 
 const props = defineProps({
   label: {
@@ -44,5 +45,6 @@ const handleSummit = () => {
     :rules="[inputRules.required]"
     @update:modelValue="handleUpdateModel"
     @keydown.enter.prevent="handleSummit"
+    :disabled="loadingStore.loading"
   />
 </template>
