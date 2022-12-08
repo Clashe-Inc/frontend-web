@@ -23,8 +23,7 @@ const handleExpandingDrawer = () => (rail.value = !rail.value);
 
 const handleChangingRoute = (item: RouteRecordRaw) => {
   if (route.name === item.name) return;
-  const { name } = route;
-  if (!name) return;
+  const { name } = item;
   router.push({
     name,
   });
@@ -67,6 +66,7 @@ const handleExitAppIcon = () => router.push({ name: 'Login' });
           />
         </template>
       </VTooltip>
+      <VDivider />
       <VTooltip text="Sair">
         <template v-slot:activator="{ props }">
           <VListItem
