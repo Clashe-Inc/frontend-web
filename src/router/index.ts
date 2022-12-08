@@ -1,4 +1,3 @@
-import SummonerAuthService from '@/services/SummonerAuthService';
 import { authStore } from '@/stores/AuthStore';
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router';
 
