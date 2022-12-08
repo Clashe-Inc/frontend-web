@@ -53,20 +53,36 @@ const handleClickBack = () => {
         <VForm ref="registerForm">
           <VRow>
             <VCol cols="12">
-              <InputEmail v-model="summoner.email" label="Email" required></InputEmail>
+              <InputEmail
+                v-model="summoner.email"
+                label="Email"
+                required
+                @submit="handleClickRegister"
+              ></InputEmail>
             </VCol>
             <VCol cols="12">
-              <InputPassword v-model="summoner.password" label="Password" required></InputPassword>
+              <InputPassword
+                v-model="summoner.password"
+                label="Password"
+                required
+                @submit="handleClickRegister"
+              ></InputPassword>
             </VCol>
             <VCol cols="12">
               <InputPassword
                 v-model="summoner.confirm_password"
                 label="Confirm password"
                 required
+                @submit="handleClickRegister"
               ></InputPassword>
             </VCol>
             <VCol cols="12">
-              <InputNickname v-model="summoner.nickname" label="Nickname" required></InputNickname>
+              <InputNickname
+                v-model="summoner.nickname"
+                label="Nickname"
+                required
+                @submit="handleClickRegister"
+              ></InputNickname>
             </VCol>
             <VCol cols="12">
               <ButtonSuccess label="Cadastrar agora" @click="handleClickRegister" />
