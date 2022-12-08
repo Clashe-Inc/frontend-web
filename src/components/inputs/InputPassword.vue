@@ -37,7 +37,7 @@ const handleSummit = () => {
   emit('submit');
 };
 
-const handleClickIcon = () => show.value != show.value;
+const handleClickIcon = () => (show.value = !show.value);
 </script>
 
 <template>
