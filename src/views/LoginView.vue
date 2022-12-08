@@ -62,6 +62,7 @@ onMounted(() => {
                       label="Email"
                       required
                       @submit="handleSubmit"
+                      autofocus
                     />
                   </VCol>
                   <VCol cols="12">
