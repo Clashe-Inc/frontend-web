@@ -25,7 +25,10 @@ onMounted(async () => {
 watch(
   () => authStore.isAuthenticated,
   (isAuthenticated) => {
-    if (!isAuthenticated) router.push({ name: 'Login' });
+    if (!isAuthenticated) {
+      summonerStore.remove();
+      router.push({ name: 'Login' });
+    }
   }
 );
 </script>

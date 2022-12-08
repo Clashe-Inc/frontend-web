@@ -2,8 +2,8 @@ interface SummonerResponse {
   email: string;
   nickname: string;
   code: string;
-  level: BigInteger;
-  profile_icon_id: BigInteger;
+  level: number;
+  profile_icon_id: number;
 }
 
 export default SummonerResponse;
