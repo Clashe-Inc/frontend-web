@@ -1,4 +1,4 @@
-import SummonerAuthService from '@/services/SummonerAuthService';
+import { authStore } from '@/stores/AuthStore';
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
@@ -48,7 +48,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const allowedRoutes: string[] = ['Summoner Register', 'Login'];
   const routeName = to.name?.toString() ?? '';
-  if (!SummonerAuthService.isAuthenticated() && !allowedRoutes.includes(routeName)) {
+  if (!authStore.isAuthenticated && !allowedRoutes.includes(routeName)) {
     next({ name: 'Login' });
   } else next();
 });

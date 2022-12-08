@@ -2,6 +2,7 @@ import type ErrorResponse from '@/domains/ErrorResponse';
 import type NewSummonerRequest from '@/domains/NewSummonerRequest';
 import type SummonerResponse from '@/domains/SummonerResponse';
 import HttpClient from '@/plugins/HttpClientPlugin';
+
 import type { AxiosError } from 'axios';
 
 const register = async (request: NewSummonerRequest) => {
@@ -14,6 +15,17 @@ const register = async (request: NewSummonerRequest) => {
   }
 };
 
+const get = async () => {
+  try {
+    const { data } = await HttpClient.get<SummonerResponse>('/v1/summoners');
+    return data;
+  } catch (error) {
+    const { response } = error as AxiosError<ErrorResponse>;
+    throw new Error(response?.data.message);
+  }
+};
+
 export default {
   register,
+  get,
 };
