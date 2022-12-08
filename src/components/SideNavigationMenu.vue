@@ -20,6 +20,11 @@ const selectedItem = computed(() => {
   return props.items.findIndex(({ name }) => name === route.name?.toString());
 });
 
+const summonerAvatarUrl = computed(() => {
+  if (!summonerStore.summoner.profile_icon_id) return '';
+  return `http://ddragon.leagueoflegends.com/cdn/12.23.1/img/profileicon/${summonerStore.summoner.profile_icon_id}.png`;
+});
+
 const handleExpandingDrawer = () => (rail.value = !rail.value);
 
 const handleChangingRoute = (item: RouteRecordRaw) => {
@@ -42,7 +47,7 @@ const handleExitAppIcon = () => router.push({ name: 'Login' });
     height="100%"
   >
     <VListItem
-      :prepend-avatar="`http://ddragon.leagueoflegends.com/cdn/12.23.1/img/profileicon/${summonerStore.summoner.profile_icon_id}.png`"
+      :prepend-avatar="summonerAvatarUrl"
       :title="summonerStore.summoner.nickname"
       nav
       @click="handleExpandingDrawer"

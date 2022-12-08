@@ -46,5 +46,6 @@ const handleSummit = () => {
     @update:modelValue="handleUpdateModel"
     @keydown.enter.prevent="handleSummit"
     :disabled="loadingStore.loading"
+    :loading="loadingStore.loading"
   />
 </template>

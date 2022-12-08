@@ -52,5 +52,6 @@ const handleSummit = () => {
     :rules="[inputRules.required, emailRules.validate]"
     @keydown.enter.prevent="handleSummit"
     :disabled="loadingStore.loading"
+    :loading="loadingStore.loading"
   />
 </template>

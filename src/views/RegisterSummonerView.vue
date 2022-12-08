@@ -7,6 +7,7 @@ import InputNickname from '@/components/inputs/InputNickname.vue';
 import InputPassword from '@/components/inputs/InputPassword.vue';
 import type NewSummonerRequest from '@/domains/NewSummonerRequest';
 import SummonerService from '@/services/SummonerService';
+import { loadingStore } from '@/stores/LoadingStore';
 import { snackbarStore } from '@/stores/SnackbarStore';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -25,13 +26,16 @@ const handleClickRegister = async () => {
   if (!registerForm.value) return;
   const { valid } = await registerForm.value.validate();
   if (!valid) return;
-  SummonerService.register(summoner.value)
-    .then(() => {
-      snackbarStore.success('Registro realizado com sucesso');
-    })
-    .catch((error) => {
-      snackbarStore.error((error as Error).message);
-    });
+  loadingStore.setLoading(true);
+  try {
+    await SummonerService.register(summoner.value);
+    snackbarStore.success('Registro realizado com sucesso');
+    registerForm.value.reset();
+  } catch (error) {
+    snackbarStore.error((error as Error).message);
+  } finally {
+    loadingStore.setLoading(false);
+  }
 };
 const handleClickBack = () => {
   router.push({

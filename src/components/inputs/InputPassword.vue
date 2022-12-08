@@ -55,5 +55,6 @@ const handleClickIcon = () => show.value != show.value;
     @update:model-value="handleUpdateModel"
     @keydown.enter.prevent="handleSummit"
     :disabled="loadingStore.loading"
+    :loading="loadingStore.loading"
   />
 </template>
