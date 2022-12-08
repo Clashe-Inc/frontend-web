@@ -23,6 +23,7 @@ import vuetify from '@/plugins/VuetifyPlugin';
 import router from '@/router';
 import { mount } from 'cypress/vue';
 import type { Router } from 'vue-router';
+import type { MountingOptions } from '@vue/test-utils';
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
@@ -30,11 +31,9 @@ import type { Router } from 'vue-router';
 // with a <reference path="./component" /> at the top of your spec.
 /* eslint-disable @typescript-eslint/no-namespace */
 
-type MountParams = Parameters<typeof mount>;
-type OptionsParam = MountParams[1] & {
+type OptionsParam = MountingOptions<{}> & {
   router?: Router;
   vuetify?: any;
-  props: {};
 };
 
 declare global {
@@ -47,9 +46,10 @@ declare global {
 
 Cypress.Commands.add('mount', (component, options) => {
   const newOptions = { ...options };
-  newOptions.global = { plugins: [] };
+  newOptions.global = {};
+  newOptions.global.plugins = [];
   newOptions.global.plugins.push(vuetify);
-  newOptions.global.plugins.push(router);
+  newOptions.global?.plugins?.push(router);
   return mount(component, newOptions);
 });
 // Example use:

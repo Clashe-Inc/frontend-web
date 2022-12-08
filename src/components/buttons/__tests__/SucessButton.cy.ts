@@ -1,18 +1,17 @@
-import ButtonSuccess from '../ButtonSuccess.vue';
+import SuccessButton from '../SuccessButton.vue';
 
 describe('Button', () => {
   it('should mount', () => {
-    cy.mount(ButtonSuccess, {
-      props: {
-        id: 'btn-success1',
-      },
+    const id = 'btn-success1';
+    cy.mount(SuccessButton, {
+      props: { id },
     });
 
     cy.get('#btn-success1').contains('OK');
   });
   it('should click', () => {
     const onClickSpy = cy.spy().as('onClickSpy');
-    cy.mount(ButtonSuccess, {
+    cy.mount(SuccessButton, {
       props: {
         onClick: onClickSpy,
       },
