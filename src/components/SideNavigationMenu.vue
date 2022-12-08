@@ -71,6 +71,7 @@ const handleExitAppIcon = () => router.push({ name: 'Login' });
       <VTooltip text="Sair">
         <template v-slot:activator="{ props }">
           <VListItem
+            class="mt-1"
             v-bind="props"
             id="menu-login"
             prepend-icon="mdi-exit-to-app"

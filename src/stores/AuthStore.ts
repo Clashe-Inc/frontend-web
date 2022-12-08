@@ -7,10 +7,7 @@ export const authStore = reactive({
   isAuthenticated: !!CookieManagerPlugin.getCookie(AUTH_TOKEN),
 
   setAuthentication(authResponse: SummonerAuthResponse) {
-    CookieManagerPlugin.setCookie({
-      name: AUTH_TOKEN,
-      value: authResponse.access_token,
-    });
+    CookieManagerPlugin.setCookie(AUTH_TOKEN, authResponse.access_token);
     this.isAuthenticated = true;
   },
 

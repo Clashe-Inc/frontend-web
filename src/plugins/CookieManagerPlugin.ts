@@ -1,7 +1,6 @@
-import type CookieInput from '@/domains/CookieInput';
 import cookie from 'cookie';
 
-const setCookie = ({ name, value }: CookieInput) => {
+const setCookie = (name: string, value: string) => {
   document.cookie = cookie.serialize(name, value, {
     secure: false,
     sameSite: true,
