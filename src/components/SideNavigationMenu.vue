@@ -46,14 +46,17 @@ const handleExitAppIcon = () => router.push({ name: 'Login' });
     :rail="rail"
     height="100%"
   >
-    <VListItem
-      :prepend-avatar="summonerAvatarUrl"
-      :title="summonerStore.summoner.nickname"
-      nav
-      @click="handleExpandingDrawer"
-    >
+    <VListItem nav @click="handleExpandingDrawer">
+      <template v-slot:prepend>
+        <VBadge class="mb-2" :content="summonerStore.summoner.level" location="bottom center">
+          <VAvatar :image="summonerAvatarUrl" />
+        </VBadge>
+      </template>
+      <template v-slot:title>
+        <span class="text-subtitle-2 ml-2">{{ summonerStore.summoner.nickname }}</span>
+      </template>
       <template v-slot:append>
-        <v-btn variant="text" icon="mdi-chevron-left" @click.stop="handleExpandingDrawer"></v-btn>
+        <VIcon icon="mdi-chevron-left" />
       </template>
     </VListItem>
     <VDivider />
